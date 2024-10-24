@@ -3,8 +3,8 @@ import Header, { TestType } from '../components/Header';
 import UnitTests from './UnitTests';
 import IntegrationTests from './IntegrationTests';
 import { TestData } from '../interfaces';
-const unitTestData = require('../test-results/unitTestData.json');
-const integrationTestData = require('../test-results/integrationTestData.json');
+const unitTestData = require('../test-results/unitTests.json');
+const integrationTestData = require('../test-results/integrationTests.json');
 
 
 const emptyTestData: TestData = {
