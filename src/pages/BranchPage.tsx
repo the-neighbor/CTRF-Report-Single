@@ -3,6 +3,8 @@ import Header, { TestType } from '../components/Header';
 import UnitTests from './UnitTests';
 import IntegrationTests from './IntegrationTests';
 import { TestData } from '../interfaces';
+const unitTestData = require('../test-results/unitTestData.json');
+const integrationTestData = require('../test-results/integrationTestData.json');
 
 
 const emptyTestData: TestData = {
@@ -32,17 +34,17 @@ const emptyTestData: TestData = {
 
 const BranchPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState('unit');
-  const [unitTestData, setUnitTestData] = useState<TestData>(emptyTestData);
-  const [integrationTestData, setIntegrationTestData] = useState<TestData>(emptyTestData);
-  //read in the json file and set the state
-  useEffect(() => {
-    fetch(`./test-results/unitTestData.json`)
-      .then(response => response.json())
-      .then(data => setUnitTestData(data))
-    fetch(`./test-results/integrationTestData.json`)
-      .then(response => response.json())
-      .then(data => setIntegrationTestData(data))
-   }, [selectedTab])
+  // const [unitTestData, setUnitTestData] = useState<TestData>(emptyTestData);
+  // const [integrationTestData, setIntegrationTestData] = useState<TestData>(emptyTestData);
+  // //read in the json file and set the state
+  // useEffect(() => {
+  //   fetch(`./test-results/unitTestData.json`)
+  //     .then(response => response.json())
+  //     .then(data => setUnitTestData(data))
+  //   fetch(`./test-results/integrationTestData.json`)
+  //     .then(response => response.json())
+  //     .then(data => setIntegrationTestData(data))
+  //  }, [selectedTab])
 
   return (
     <div className="Branch">
