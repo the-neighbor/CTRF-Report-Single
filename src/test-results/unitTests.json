@@ -1,0 +1,30 @@
+{
+  "results": {
+    "tool": {
+      "name": "jest"
+    },
+    "summary": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "pending": 0,
+      "skipped": 0,
+      "other": 0,
+      "start": 1729792525705,
+      "stop": 1729792528409
+    },
+    "tests": [
+      {
+        "name": "Template Component exists",
+        "duration": 1,
+        "status": "passed",
+        "rawStatus": "passed",
+        "type": "unit",
+        "filePath": "/home/runner/work/Tymeline-FE-internship/Tymeline-FE-internship/src/spaces/olive/__tests__/Template.test.js",
+        "retries": 0,
+        "flaky": false,
+        "suite": "Template.test.js > Template Component"
+      }
+    ]
+  }
+}

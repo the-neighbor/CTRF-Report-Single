@@ -5,7 +5,7 @@ import Header, { TestType } from './components/Header';
 import UnitTests from './pages/UnitTests';
 import IntegrationTests from './pages/IntegrationTests';
 import { TestData } from './interfaces';
-import HomePage from './pages/HomePage';
+// import HomePage from './pages/HomePage';
 import BranchPage from './pages/BranchPage';
 
 

@@ -86,4 +86,15 @@ export interface TestData {
     }
     [k: string]: unknown
   }
-  
+
+
+  export interface Attachment {
+      name: string
+      path: string
+      contentType: string
+  }
+export interface AttachmentData {
+  [k: string]: {
+   [k: string]: Attachment[]
+  }
+}

@@ -15,6 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table"
+import { ansiToHtml } from "../lib/utils"
+import AnsiText from "./AnsiText"
+import { AttachmentData } from "@/interfaces"
 
 export interface TestStep {
   name: string
@@ -59,7 +62,7 @@ interface TestResultsTableProps {
   results: TestResult[]
 }
 
-export default function TestResultsTable({ results }: TestResultsTableProps) {
+export default function TestResultsTable({ results, attachments={} }: {results: TestResult[], attachments: AttachmentData}) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "passed":
@@ -82,10 +85,31 @@ export default function TestResultsTable({ results }: TestResultsTableProps) {
   const formatDate = (timestamp?: number) => {
     return timestamp ? new Date(timestamp).toLocaleString() : "N/A"
   }
-
+console.log(attachments)
   return (
     <Accordion type="single" collapsible className="w-full">
-      {results.map((result, index) => (
+      {results.map((result, index) => {
+        const suites = Object.keys(attachments);
+        const tests = [];
+        let screenshot = "";
+        let video = "";
+        let trace = "";
+        suites.forEach(suite => {
+          if (attachments[suite][result.name] && result.suite?.includes(suite)) {
+            const browserName = result.suite.split(" ")[0].toLowerCase();
+            const currentAttachments = attachments[suite][result.name].filter(attachment => attachment.path.toLowerCase().includes(browserName));
+            currentAttachments.forEach(attachment => {
+              if (attachment.name === "screenshot") {
+                screenshot = attachment.path;
+              } else if (attachment.name === "video") {
+                video = attachment.path;
+              } else if (attachment.name === "trace") {
+                trace = attachment.path;
+              }
+            });
+          }
+        });
+        return(
         <AccordionItem value={`item-${index}`} key={index}>
           <AccordionTrigger className={`flex justify-between p-4 ${getStatusColor(result.status)}`}>
             <div className="flex flex-1 justify-between items-center">
@@ -117,10 +141,18 @@ export default function TestResultsTable({ results }: TestResultsTableProps) {
                     <p><strong>Line:</strong> {result.line || "N/A"}</p>
                   </div>
                   <div>
-                    {result.screenshot && (
+                    {(result.screenshot || screenshot) && (
                       <img
-                        src={result.screenshot}
+                        src={result.screenshot || screenshot}
                         alt="Test Screenshot"
+                        className="max-w-full h-auto"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    {(result.video || video) && (
+                      <video
+                        src={video}
                         className="max-w-full h-auto"
                       />
                     )}
@@ -129,13 +161,13 @@ export default function TestResultsTable({ results }: TestResultsTableProps) {
                 {result.message && (
                   <div>
                     <h4 className="font-semibold">Message:</h4>
-                    <p className="whitespace-pre-wrap">{result.message}</p>
+                    <AnsiText text={result.message} />
                   </div>
                 )}
                 {result.trace && (
                   <div>
                     <h4 className="font-semibold">Trace:</h4>
-                    <pre className="text-sm bg-gray-100 p-2 rounded">{result.trace}</pre>
+                    <AnsiText text={result.trace} />
                   </div>
                 )}
                 {result.ai && (
@@ -187,7 +219,7 @@ export default function TestResultsTable({ results }: TestResultsTableProps) {
             </ScrollArea>
           </AccordionContent>
         </AccordionItem>
-      ))}
+      )})}
     </Accordion>
   )
 }

@@ -5,6 +5,7 @@ import IntegrationTests from './IntegrationTests';
 import { TestData } from '../interfaces';
 const unitTestData = require('../test-results/unitTests.json');
 const integrationTestData = require('../test-results/integrationTests.json');
+const attachmentData = require('../test-results/attachments.json');
 
 
 const emptyTestData: TestData = {
@@ -46,11 +47,12 @@ const BranchPage: React.FC = () => {
   //     .then(data => setIntegrationTestData(data))
   //  }, [selectedTab])
 
+  console.log(attachmentData)
   return (
     <div className="Branch">
       <Header initialTab={selectedTab as TestType} onTabChange={setSelectedTab}  />
-      {selectedTab === 'unit' && <UnitTests testData={unitTestData} />}
-      {selectedTab === 'integration' && <IntegrationTests testData={integrationTestData}/>}
+      {selectedTab === 'unit' && <UnitTests testData={unitTestData}/>}
+      {selectedTab === 'integration' && <IntegrationTests testData={integrationTestData} attachmentData={attachmentData}/>}
     </div>
   );
 }
